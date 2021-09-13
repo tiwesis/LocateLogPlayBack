@@ -34,9 +34,20 @@ public class LocateLog extends Log {
 
     @Value("none")
     private String type;
+    //yyyy-MM-dd HH:mm:ss:SS
+    @Value("2000:02:04:08:00:00")
+    private String time;
 
     public LocateLog(){
 
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public LocateLog(String type) {
@@ -51,5 +62,11 @@ public class LocateLog extends Log {
         this.type = type;
     }
 
-
+    @Override
+    public String toString() {
+        return "LocateLog{" +
+                "type='" + type + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }

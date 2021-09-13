@@ -58,9 +58,11 @@ public class LocateLogHandle {
         List<LocateLog> locateLogList = new ArrayList<>();
         List<String[]> logsFromFile = getLogsFromFile();
         for (String[] logLine : logsFromFile){
-            locateLogList.add(new LocateLog(logLine[0]));
-            //add other params
-
+            LocateLog locateLog = new LocateLog();
+            locateLog.setType(logLine[0]);
+            locateLog.setTime(LocateLogUtils.timestampToDate(logLine[1]));
+            locateLogList.add(locateLog);
+            //different type, add different other params
 
         }
         Logger logger = Logger.getLogger("turnToObjectLog");

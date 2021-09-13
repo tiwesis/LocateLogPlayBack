@@ -21,7 +21,7 @@ public class LocateLogHandleTest {
         locateLogHandle.setFile(new File("/users/wt/locate_log/pos_20210910140209_uuid.log"));
         List<LocateLog> locateLogs = locateLogHandle.turnLogLineToObject();
         for (LocateLog log : locateLogs){
-            logger.log(Level.INFO, log.getType());
+            logger.log(Level.INFO, log.toString());
         }
 
     }
