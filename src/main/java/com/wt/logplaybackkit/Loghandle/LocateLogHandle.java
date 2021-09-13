@@ -61,9 +61,15 @@ public class LocateLogHandle {
             LocateLog locateLog = new LocateLog();
             locateLog.setType(logLine[0]);
             locateLog.setTime(LocateLogUtils.timestampToDate(logLine[1]));
-            locateLogList.add(locateLog);
-            //different type, add different other params
 
+            //different type, add different other params
+            switch (logLine[0]){
+                case "@POS":
+                    locateLog.setLng((float)Long.parseLong(logLine[4])/10000000);
+                    locateLog.setLat((float)Long.parseLong(logLine[5])/10000000);
+
+            }
+            locateLogList.add(locateLog);
         }
         Logger logger = Logger.getLogger("turnToObjectLog");
         logger.log(Level.INFO, "trun to LogLine Success");

@@ -37,6 +37,27 @@ public class LocateLog extends Log {
     //yyyy-MM-dd HH:mm:ss:SS
     @Value("2000:02:04:08:00:00")
     private String time;
+    @Value("0.0")
+    private float lng;
+
+    public float getLng() {
+        return lng;
+    }
+
+    public void setLng(float lng) {
+        this.lng = lng;
+    }
+
+    public float getLat() {
+        return lat;
+    }
+
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
+
+    @Value("0.0")
+    private float lat;
 
     public LocateLog(){
 
@@ -67,6 +88,8 @@ public class LocateLog extends Log {
         return "LocateLog{" +
                 "type='" + type + '\'' +
                 ", time='" + time + '\'' +
+                ", lng=" + lng +
+                ", lat=" + lat +
                 '}';
     }
 }
