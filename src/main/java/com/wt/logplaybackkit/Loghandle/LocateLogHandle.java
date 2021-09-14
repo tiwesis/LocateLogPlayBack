@@ -54,25 +54,23 @@ public class LocateLogHandle {
         return logLineList;
     }
 
-    public List<LocateLog> turnLogLineToObject(){
+    public List<LocateLog> turnLogLineToObjects(){
         List<LocateLog> locateLogList = new ArrayList<>();
         List<String[]> logsFromFile = getLogsFromFile();
         for (String[] logLine : logsFromFile){
             LocateLog locateLog = new LocateLog();
             locateLog.setType(logLine[0]);
             locateLog.setTime(LocateLogUtils.timestampToDate(logLine[1]));
-
             //different type, add different other params
             switch (logLine[0]){
                 case "@POS":
                     locateLog.setLng((float)Long.parseLong(logLine[4])/10000000);
                     locateLog.setLat((float)Long.parseLong(logLine[5])/10000000);
-
             }
             locateLogList.add(locateLog);
         }
         Logger logger = Logger.getLogger("turnToObjectLog");
-        logger.log(Level.INFO, "trun to LogLine Success");
+        logger.log(Level.INFO, "turn to LogLine Success");
         return locateLogList;
     }
 
