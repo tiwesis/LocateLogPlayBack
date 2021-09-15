@@ -66,6 +66,7 @@ public class LocateLogHandle {
                 case "@POS":
                     locateLog.setLng((float)Long.parseLong(logLine[4])/10000000);
                     locateLog.setLat((float)Long.parseLong(logLine[5])/10000000);
+                    locateLog.setSpeed(Float.parseFloat(logLine[8]));
             }
             locateLogList.add(locateLog);
         }

@@ -27,27 +27,41 @@
 
 <script th:inline="javascript">
     var map = new BMapGL.Map('container');
-
     map.enableScrollWheelZoom(true);
     // 创建点标记
     var markerList = [[${posList}]];
-    var markerLatList = [[${posLatList}]]
-    var markerLngList = [[${posLngList}]]
-    // console.log(markerList);
-    map.centerAndZoom(new BMapGL.Point(markerLatList[0], markerLngList[0]), 19);
-    for (var i = 0; i < markerList.length; i++){
-        var marker = new BMapGL.Marker(new BMapGL.Point(markerLatList[i], markerLngList[i]));
-        map.addOverlay(marker);
+    var markerLatList = [[${posLatList}]];
+    var markerLngList = [[${posLngList}]];
+    var markerSpeedList= [[${posSpeedList}]];
+
+    var opts = {
+        width : 100,     // 信息窗口宽度
+        height: 50,     // 信息窗口高度
+        enableMessage:true,//设置允许信息窗发送短息
+        title: "info list"
     }
 
-    // var marker1 = new BMapGL.Marker(new BMapGL.Point(116.404, 39.925));
-    // var marker2 = new BMapGL.Marker(new BMapGL.Point(116.404, 39.915));
-    // var marker3 = new BMapGL.Marker(new BMapGL.Point(116.395, 39.935));
-    // var marker4 = new BMapGL.Marker(new BMapGL.Point(116.415, 39.931));
-    // // 在地图上添加点标记
-    // map.addOverlay(marker1);
-    // map.addOverlay(marker2);
-    // map.addOverlay(marker3);
-    // map.addOverlay(marker4);
+
+    console.log(markerList);
+    // console.log(markerSpeedList)
+
+    map.centerAndZoom(new BMapGL.Point(markerLatList[0], markerLngList[0]), 19);
+
+    for (var i = 1; i < markerList.length; i++){
+        var point = new BMapGL.Point(markerLatList[i], markerLngList[i]);
+        var marker = new BMapGL.Marker(point);
+        map.addOverlay(marker);
+        var speed = markerSpeedList[i];
+        console.log(speed);
+        var infoWindow = new BMapGL.InfoWindow("speed： " + String(speed), opts);
+        (function (inf, poi){
+            marker.addEventListener("click", function(){
+                map.openInfoWindow(inf,poi); //开启信息窗口
+            });
+        })(infoWindow,point)
+
+        // map.centerAndZoom(new BMapGL.Point(markerLatList[i], markerLngList[i]), 20);
+    }
+
 </script>
 

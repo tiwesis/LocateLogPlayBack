@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.xml.bind.annotation.XmlEnumValue;
+
 @Component("locateLog")
 public class LocateLog extends Log {
 
@@ -39,6 +41,18 @@ public class LocateLog extends Log {
     private String time;
     @Value("0.0")
     private float lng;
+    @Value("0.0")
+    private float lat;
+    @Value("0.0")
+    private float speed;
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
 
     public float getLng() {
         return lng;
@@ -56,8 +70,7 @@ public class LocateLog extends Log {
         this.lat = lat;
     }
 
-    @Value("0.0")
-    private float lat;
+
 
     public LocateLog(){
 
@@ -90,6 +103,7 @@ public class LocateLog extends Log {
                 ", time='" + time + '\'' +
                 ", lng=" + lng +
                 ", lat=" + lat +
+                ", speed=" + speed +
                 '}';
     }
 }
