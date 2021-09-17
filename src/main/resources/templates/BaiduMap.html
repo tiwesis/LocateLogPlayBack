@@ -25,7 +25,7 @@
 </body>
 </html>
 
-<script th:inline="javascript">
+<script type="text/javascript" th:inline="javascript">
     var map = new BMapGL.Map('container');
     map.enableScrollWheelZoom(true);
     // 创建点标记
@@ -33,35 +33,58 @@
     var markerLatList = [[${posLatList}]];
     var markerLngList = [[${posLngList}]];
     var markerSpeedList= [[${posSpeedList}]];
+    var markerTimeList = [[${posTimeList}]];
+
 
     var opts = {
         width : 100,     // 信息窗口宽度
         height: 50,     // 信息窗口高度
         enableMessage:true,//设置允许信息窗发送短息
-        title: "info list"
+        title: "param list"
     }
-
-
-    console.log(markerList);
-    // console.log(markerSpeedList)
-
     map.centerAndZoom(new BMapGL.Point(markerLatList[0], markerLngList[0]), 19);
 
-    for (var i = 1; i < markerList.length; i++){
-        var point = new BMapGL.Point(markerLatList[i], markerLngList[i]);
-        var marker = new BMapGL.Marker(point);
-        map.addOverlay(marker);
-        var speed = markerSpeedList[i];
-        console.log(speed);
-        var infoWindow = new BMapGL.InfoWindow("speed： " + String(speed), opts);
-        (function (inf, poi){
-            marker.addEventListener("click", function(){
-                map.openInfoWindow(inf,poi); //开启信息窗口
-            });
-        })(infoWindow,point)
+    translateCallback = function (data){
+        console.log(data.points);
+        if(data.status === 0) {
+            for (var j = 0; j < data.points.length; j++){
+                var time = markerTimeList[j];
+                var speed = markerSpeedList[j];
+                var infoWindow = new BMapGL.InfoWindow("speed： " + String(speed) + '\n' + "time: " + String(time), opts);
+                var imgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK7JjnTosjD5A9-mfgePlMj5oZ-z6J5Jyk9A&usqp=CAU";
+                // var imgUrl = "data:image/png;base64,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";
+                var myIcon = new BMapGL.Icon(String (imgUrl), new BMapGL.Size(30, 55))
+                var marker;
 
-        // map.centerAndZoom(new BMapGL.Point(markerLatList[i], markerLngList[i]), 20);
+                if (speed === 0){
+                    marker = new BMapGL.Marker(data.points[j], {
+                        icon: myIcon
+                    })
+                }
+                else{
+                    marker = new BMapGL.Marker(data.points[j]);
+                }
+                map.addOverlay(marker);
+                (function (inf, poi){
+                    marker.addEventListener("click", function(){
+                        map.openInfoWindow(inf,poi); //开启信息窗口
+                    });
+                })(infoWindow,data.points[j])
+            }
+        }
     }
+
+    setTimeout(function(){
+        var convertor = new BMapGL.Convertor();
+
+        var gcjPointList = [];
+        for (var i = 0; i < 20; i++){
+            gcjPointList.push(new BMapGL.Point(markerLatList[i], markerLngList[i]));
+        }
+        console.log(gcjPointList);
+        convertor.translate(gcjPointList, COORDINATES_GCJ02, COORDINATES_BD09, translateCallback);
+    });
+
 
 </script>
 

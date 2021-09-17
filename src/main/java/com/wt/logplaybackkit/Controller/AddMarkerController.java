@@ -32,11 +32,12 @@ public class AddMarkerController {
     @GetMapping(value = "/map")
     public String AddPOSMarkersOnMap(Model model){
         Logger logger = Logger.getLogger("AddPOSMarkersOnMapLog");
-        LocateLogHandle logHandle = new LocateLogHandle(new File("/users/wt/locate_log/pos_20210908153839_uuid.log"));
+        LocateLogHandle logHandle = new LocateLogHandle(new File("/users/wt/locate_static/pos_20210916143759_uuid.log"));
         List<LocateLog> locateLogs = logHandle.turnLogLineToObjects();
         List<Float> posLogLatList = new ArrayList<>();
         List<Float> posLogLngList = new ArrayList<>();
         List<Float> posLogSpeedList = new ArrayList<>();
+        List<String> posLogTimeList = new ArrayList<>();
         List<LocateLog> posLocateLogs = new ArrayList<>();
         for (LocateLog locateLog : locateLogs){
             if (locateLog.getType().equals("@POS")){
@@ -44,6 +45,7 @@ public class AddMarkerController {
                 posLogLatList.add(locateLog.getLat());
                 posLogLngList.add(locateLog.getLng());
                 posLogSpeedList.add(locateLog.getSpeed());
+                posLogTimeList.add(locateLog.getTime());
             }
         }
         for (LocateLog log : posLocateLogs){
@@ -54,6 +56,7 @@ public class AddMarkerController {
         model.addAttribute("posLatList", posLogLatList);
         model.addAttribute("posLngList", posLogLngList);
         model.addAttribute("posSpeedList", posLogSpeedList);
+        model.addAttribute("posTimeList", posLogTimeList);
         return "BaiduMap";
     }
 
