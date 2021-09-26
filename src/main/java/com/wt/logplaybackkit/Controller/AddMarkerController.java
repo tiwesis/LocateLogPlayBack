@@ -32,7 +32,7 @@ public class AddMarkerController {
     @GetMapping(value = "/map")
     public String AddPOSMarkersOnMap(Model model){
         Logger logger = Logger.getLogger("AddPOSMarkersOnMapLog");
-        LocateLogHandle logHandle = new LocateLogHandle(new File("/users/wt/locate_static/pos_20210916143759_uuid.log"));
+        LocateLogHandle logHandle = new LocateLogHandle(new File("/users/wt/locate_log/pos_20210924153201_uuid.log"));
         List<LocateLog> locateLogs = logHandle.turnLogLineToObjects();
         List<Float> posLogLatList = new ArrayList<>();
         List<Float> posLogLngList = new ArrayList<>();
